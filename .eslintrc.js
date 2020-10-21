@@ -11,6 +11,7 @@ module.exports = {
     'eol-last': ['off'],
     'no-trailing-spaces': ['off'],
     'prettier/prettier': ['off', { htmlWhitespaceSensitivity: 'ignore' }],
+    'space-unary-ops': ['off'],
     curly: ['off']
   }
 }

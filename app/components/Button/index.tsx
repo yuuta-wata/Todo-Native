@@ -3,8 +3,17 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import { Props } from './type'
 
-const Button: FC<Props> = ({ style, textStyle, title, onPress }) => (
-  <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+const Button: FC<Props> = ({
+  style,
+  textStyle,
+  title,
+  disabled = false,
+  onPress
+}) => (
+  <TouchableOpacity
+    style={[styles.container, style]}
+    disabled={disabled}
+    onPress={onPress}>
     <Text style={textStyle}>{title}</Text>
   </TouchableOpacity>
 )

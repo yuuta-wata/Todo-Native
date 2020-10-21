@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { SafeAreaView, StyleSheet, Dimensions, View, Text } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 import Button from '../components/Button'
 
-const TopScreen = () => {
+const TopScreen: FC = () => {
   const { width, height } = Dimensions.get('window')
+  const navigation = useNavigation()
+
   // buttonSize
   const buttonWidth = width * 0.8
   const buttonHeight = height * 0.07
@@ -32,7 +35,7 @@ const TopScreen = () => {
             ]}
             textStyle={[styles.buttonTitle, { fontSize: buttonTitleSize }]}
             title="ログイン"
-            onPress={() => {}}
+            onPress={() => navigation.navigate('LoginScreen')}
           />
           <Button
             style={[
@@ -45,7 +48,9 @@ const TopScreen = () => {
             ]}
             textStyle={[styles.buttonTitle, { fontSize: buttonTitleSize }]}
             title="新規登録"
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('RegisterScreen')
+            }}
           />
           <Button
             style={[
