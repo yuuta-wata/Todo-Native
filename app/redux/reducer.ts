@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-import { RegisterReducer } from './modules/register/reducer'
+import { modulesReducer } from './modules/reducer'
 
 export const rootReducer = combineReducers({
-  register: RegisterReducer
+  modules: modulesReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
