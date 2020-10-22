@@ -1,74 +1,30 @@
-import React, { FC } from 'react'
-import { Dimensions } from 'react-native'
-import { Provider } from 'react-redux'
+import React, { FC, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 
-import TopScreen from '../../screen/TopScreen'
-import RegisterScreen from '../../screen/RegisterScreen'
+import AuthStack from '../AuthStack'
+import HomeStack from '../HomeStack'
 
-import { store } from '../../redux/store'
-import { ParamList } from './type'
-import LoginScreen from '../../screen/LoginScreen'
+import { RootState } from '../../redux/reducer'
+import { FetchRefreshToken } from '../../redux/modules/token/actions'
 
-const Stack = createStackNavigator<ParamList>()
+const propsSelector = (state: RootState) => ({
+  loggedIn: state.modules.token.loggedIn
+})
 
 const Routes: FC = () => {
-  const { height } = Dimensions.get('window')
+  const dispatch = useDispatch()
+  const { loggedIn } = useSelector(propsSelector)
+
+  useEffect(() => {
+    dispatch(FetchRefreshToken())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="TopScreen">
-          <Stack.Screen
-            name="TopScreen"
-            options={{ headerShown: false }}
-            component={TopScreen}
-          />
-          <Stack.Screen
-            name="RegisterScreen"
-            options={{
-              headerTintColor: '#EBEBEB',
-              headerTitle: '新規登録',
-              headerTitleStyle: {
-                color: '#EBEBEB',
-                fontSize: height * 0.03
-              },
-              headerBackTitle: 'TOP画面',
-              headerBackTitleStyle: {
-                color: '#EBEBEB'
-              },
-              headerStyle: {
-                borderBottomWidth: 1,
-                borderBottomColor: '#EBEBEB',
-                backgroundColor: '#2B6187'
-              }
-            }}
-            component={RegisterScreen}
-          />
-          <Stack.Screen
-            name="LoginScreen"
-            options={{
-              headerTintColor: '#EBEBEB',
-              headerTitle: 'ログイン',
-              headerTitleStyle: {
-                color: '#EBEBEB',
-                fontSize: height * 0.03
-              },
-              headerBackTitle: 'TOP画面',
-              headerBackTitleStyle: {
-                color: '#EBEBEB'
-              },
-              headerStyle: {
-                borderBottomWidth: 1,
-                borderBottomColor: '#EBEBEB',
-                backgroundColor: '#2B6187'
-              }
-            }}
-            component={LoginScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      {loggedIn ? <HomeStack /> : <AuthStack />}
+    </NavigationContainer>
   )
 }
 

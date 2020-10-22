@@ -1,13 +1,13 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 
-export type ParamList = {
+export type AuthParamList = {
   TopScreen: undefined
   RegisterScreen: undefined
   LoginScreen: undefined
 }
 
-export type NavProps<T extends keyof ParamList> = {
-  navigation: StackNavigationProp<ParamList, T>
-  route: RouteProp<ParamList, T>
+export type AuthNavProps<T extends keyof AuthParamList> = {
+  navigation: StackNavigationProp<AuthParamList, T>
+  route: RouteProp<AuthParamList, T>
 }
