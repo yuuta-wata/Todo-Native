@@ -4,13 +4,15 @@ import {
   LOGIN_INPUT_EMAIL,
   LOGIN_INPUT_PASSWORD,
   SEND_LOGIN_RESULTED,
-  LOGIN_LOADING
+  LOGIN_LOADING,
+  LOGIN_SUCCESS_ALERT
 } from './action-type'
 
 interface State {
   email: string
   password: string
   isLoading: boolean
+  successAlert: boolean | null
   loginResult: LoginResulted
 }
 
@@ -18,6 +20,7 @@ const initialState: State = {
   email: '',
   password: '',
   isLoading: false,
+  successAlert: null,
   loginResult: {
     success: false,
     error: undefined
@@ -44,6 +47,10 @@ export const LoginReducer = (
     case SEND_LOGIN_RESULTED:
       const { success, error } = action.payload
       return { ...state, loginResult: { success, error } }
+
+    case LOGIN_SUCCESS_ALERT:
+      const { successAlert } = action.payload
+      return { ...state, successAlert }
 
     default:
       return state

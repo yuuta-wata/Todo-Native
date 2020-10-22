@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,7 +21,8 @@ import {
   ChangeLoginEmail,
   ChangeLoginPassword,
   IsLoginLoading,
-  SendLoginData
+  SendLoginData,
+  LoginSuccessAlert
 } from '../redux/modules/login/actions'
 import { RootState } from '../redux/reducer'
 
@@ -29,16 +30,20 @@ const propsSelector = (state: RootState) => ({
   email: state.modules.login.email,
   password: state.modules.login.password,
   isLoading: state.modules.login.isLoading,
-  loginResulted: state.modules.login.loginResult
+  loginResulted: state.modules.login.loginResult,
+  successAlert: state.modules.login.successAlert
 })
 
 const LoginScreen: FC = () => {
-  const [successAlert, setSuccessAlert] = useState<boolean | null>(false)
   const dispatch = useDispatch()
   const navigation = useNavigation()
-  const { email, password, isLoading, loginResulted } = useSelector(
-    propsSelector
-  )
+  const {
+    email,
+    password,
+    isLoading,
+    loginResulted,
+    successAlert
+  } = useSelector(propsSelector)
   const { width, height } = Dimensions.get('window')
   // inputSize
   const inputWidth = width * 0.8
@@ -51,12 +56,12 @@ const LoginScreen: FC = () => {
 
   useEffect(() => {
     dispatch(IsLoginLoading(false))
-    setSuccessAlert(loginResulted.success)
+    dispatch(LoginSuccessAlert(loginResulted.success))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginResulted])
 
   useEffect(() => {
-    setSuccessAlert(false)
+    dispatch(LoginSuccessAlert(false))
     dispatch(ChangeLoginEmail(''))
     dispatch(ChangeLoginPassword(''))
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,7 +72,7 @@ const LoginScreen: FC = () => {
       {
         text: 'OK',
         onPress: () => {
-          setSuccessAlert(false)
+          dispatch(LoginSuccessAlert(false))
           navigation.navigate('TopScreen')
         }
       }

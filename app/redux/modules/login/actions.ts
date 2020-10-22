@@ -4,6 +4,7 @@ import {
   LOGIN_INPUT_EMAIL,
   LOGIN_INPUT_PASSWORD,
   LOGIN_LOADING,
+  LOGIN_SUCCESS_ALERT,
   SEND_LOGIN_REQUIEST,
   SEND_LOGIN_RESULTED
 } from './action-type'
@@ -42,5 +43,14 @@ export const IsLoginLoading = (isLoading: boolean): LoginActionTypes => ({
   type: LOGIN_LOADING,
   payload: {
     isLoading
+  }
+})
+
+export const LoginSuccessAlert = (
+  successAlert: boolean | null
+): LoginActionTypes => ({
+  type: LOGIN_SUCCESS_ALERT,
+  payload: {
+    successAlert
   }
 })

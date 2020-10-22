@@ -8,6 +8,8 @@ export const SEND_LOGIN_RESULTED = 'SEND_LOGIN_RESULTED'
 
 export const LOGIN_LOADING = 'LOGIN_LOADING'
 
+export const LOGIN_SUCCESS_ALERT = 'LOGIN_SUCCESS_ALERT'
+
 export interface LoginResponse {
   data: {
     login: null | boolean
@@ -58,9 +60,17 @@ interface LoginLoading {
   }
 }
 
+interface LoginSuccess {
+  type: typeof LOGIN_SUCCESS_ALERT
+  payload: {
+    successAlert: boolean | null
+  }
+}
+
 export type LoginActionTypes =
   | LoginInputEmail
   | LoginInputPassword
   | SendLoginRequiest
   | SendLoginResulted
   | LoginLoading
+  | LoginSuccess
