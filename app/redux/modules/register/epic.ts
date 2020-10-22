@@ -33,9 +33,9 @@ export const registerEpic: Epic = (
     mergeMap(() =>
       from(
         register({
-          nickname: state$.value.register.nickName,
-          email: state$.value.register.email,
-          password: state$.value.register.password
+          nickname: state$.value.modules.register.nickName,
+          email: state$.value.modules.register.email,
+          password: state$.value.modules.register.password
         })
       ).pipe(map((res) => RegisterVerify(res.data)))
     )

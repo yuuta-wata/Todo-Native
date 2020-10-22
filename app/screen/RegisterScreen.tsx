@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -22,25 +22,37 @@ import {
   ChangeNickname,
   ChangeEmail,
   ChangePassword,
-  SendRegisterData
+  SuccessAlert,
+  IsRegisterLoading,
+  SendRegisterData,
+  SendRegisterResult,
+  EmailUnique
 } from '../redux/modules/register/actions'
 import { RootState } from '../redux/reducer'
 
 const propsSelector = (state: RootState) => ({
-  nickname: state.register.nickName,
-  email: state.register.email,
-  password: state.register.password,
-  registerResulted: state.register.registerResult
+  nickname: state.modules.register.nickName,
+  email: state.modules.register.email,
+  password: state.modules.register.password,
+  isLoading: state.modules.register.isLoading,
+  successAlert: state.modules.register.successAlert,
+  registerResulted: state.modules.register.registerResult,
+  /** WARNING: 一時的な対応、サーバーからのエラーレスポンスのロジックを変更する必要有り。 */
+  emailUniqueError: state.modules.register.emailUniqueError
 })
 
 const RegisterScreen: FC = () => {
-  const [loading, setLoading] = useState<boolean>(false)
-  const [successAlert, setSuccessAlert] = useState<boolean | null>(false)
   const dispatch = useDispatch()
   const navigation = useNavigation()
-  const { nickname, email, password, registerResulted } = useSelector(
-    propsSelector
-  )
+  const {
+    nickname,
+    email,
+    password,
+    isLoading,
+    successAlert,
+    registerResulted,
+    emailUniqueError
+  } = useSelector(propsSelector)
   const { width, height } = Dimensions.get('window')
   // inputSize
   const inputWidth = width * 0.8
@@ -49,53 +61,76 @@ const RegisterScreen: FC = () => {
   // headingSize
   const headingFontSize = height * 0.03
 
+  useEffect(() => {
+    dispatch(IsRegisterLoading(false))
+    dispatch(EmailUnique(registerResulted.error))
+    dispatch(SuccessAlert(registerResulted.success))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [registerResulted])
+
+  useEffect(() => {
+    dispatch(EmailUnique(undefined))
+    dispatch(SuccessAlert(false))
+    dispatch(ChangeNickname(''))
+    dispatch(ChangeEmail(''))
+    dispatch(ChangePassword(''))
+    dispatch(SendRegisterResult({ success: false, error: undefined }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  console.log('Typeof emailUniqueError:', typeof emailUniqueError)
+  console.log(
+    'Typeof registerResulted:',
+    typeof !registerResulted.error === 'string'
+  )
+
   const error =
     registerResulted.error &&
-    registerResulted.error.map((x) => {
-      switch (x.property) {
+    typeof registerResulted.error !== 'string' &&
+    registerResulted.error.map((registerError) => {
+      switch (registerError.property) {
         case ErrorPropertyType.NICKNAME: {
           return {
-            prop: x.property,
-            mes: x.constraints.length
+            prop: registerError.property,
+            mes: registerError.constraints.length
           }
         }
 
         case ErrorPropertyType.EMAIL: {
           return {
-            prop: x.property,
-            mes: x.constraints.isEmail
+            prop: registerError.property,
+            mes: registerError.constraints.isEmail
           }
         }
 
         case ErrorPropertyType.PASSWORD: {
           return {
-            prop: x.property,
-            mes: x.constraints.length
+            prop: registerError.property,
+            mes: registerError.constraints.length
           }
         }
       }
     })
-
-  useEffect(() => {
-    setLoading(false)
-    setSuccessAlert(registerResulted.success)
-  }, [registerResulted.success])
-
-  useEffect(() => {
-    setSuccessAlert(false)
-    setLoading(false)
-  }, [])
 
   if (successAlert) {
     Alert.alert('アカウントを作成しました', 'ログインしてください', [
       {
         text: 'OK',
         onPress: () => {
-          setSuccessAlert(false)
+          dispatch(SuccessAlert(false))
+
           navigation.navigate('TopScreen')
         }
       }
     ])
+  }
+
+  if (typeof emailUniqueError === 'string') {
+    Alert.alert(
+      emailUniqueError,
+      'Eメールアドレスが既に登録されている可能性があります。',
+      [{ text: 'OK', onPress: () => dispatch(EmailUnique(undefined)) }]
+    )
   }
 
   return (
@@ -219,10 +254,10 @@ const RegisterScreen: FC = () => {
                   styles.buttonTitle,
                   { fontSize: inputHeight * 1.5 * 0.4 }
                 ]}
-                disabled={loading}
+                disabled={isLoading}
                 onPress={() => {
                   Keyboard.dismiss()
-                  setLoading(true)
+                  dispatch(IsRegisterLoading(true))
                   dispatch(SendRegisterData(nickname, email, password))
                 }}
               />

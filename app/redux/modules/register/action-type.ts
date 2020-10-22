@@ -8,6 +8,12 @@ export const SEND_REGISTER_REQUIEST = 'SEND_REGISTER_REQUIEST'
 
 export const SEND_REGISTER_RESULTED = 'SEND_REGISTER_RESULTED'
 
+export const REGISTER_LOADING = 'REGISTER_LOADING'
+
+export const SUCCESS_ALERT = 'SUCCESS_ALERT'
+/** WARNING: 一時的な対応、サーバーからのエラーレスポンスのロジックを変更する必要有り。 */
+export const EMAIL_UNIQUE_ERROR = 'EMAIL_UNIQUE_ERROR'
+
 export enum ErrorPropertyType {
   NICKNAME = 'nickname',
   EMAIL = 'email',
@@ -92,9 +98,34 @@ interface SendRegisterResulted {
   payload: RegisterResulted
 }
 
+interface RegisterLoading {
+  type: typeof REGISTER_LOADING
+  payload: {
+    isLoading: boolean
+  }
+}
+
+interface SuccessAlert {
+  type: typeof SUCCESS_ALERT
+  payload: {
+    successAlert: boolean | null
+  }
+}
+
+/** WARNING: 一時的な対応、サーバーからのエラーレスポンスのロジックを変更する必要有り。 */
+interface EmailUniqueError {
+  type: typeof EMAIL_UNIQUE_ERROR
+  payload: {
+    error?: string | object
+  }
+}
+
 export type RegisterActionTypes =
   | InputNickname
   | InputEmail
   | InputPassword
   | SendRegisterRequiest
   | SendRegisterResulted
+  | RegisterLoading
+  | SuccessAlert
+  | EmailUniqueError
