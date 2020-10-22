@@ -13,7 +13,6 @@ import {
   Alert
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigation } from '@react-navigation/native'
 
 import Button from '../components/Button'
 
@@ -24,6 +23,7 @@ import {
   SendLoginData,
   LoginSuccessAlert
 } from '../redux/modules/login/actions'
+import { FetchRefreshToken } from '../redux/modules/token/actions'
 import { RootState } from '../redux/reducer'
 
 const propsSelector = (state: RootState) => ({
@@ -36,7 +36,6 @@ const propsSelector = (state: RootState) => ({
 
 const LoginScreen: FC = () => {
   const dispatch = useDispatch()
-  const navigation = useNavigation()
   const {
     email,
     password,
@@ -73,7 +72,7 @@ const LoginScreen: FC = () => {
         text: 'OK',
         onPress: () => {
           dispatch(LoginSuccessAlert(false))
-          navigation.navigate('TopScreen')
+          dispatch(FetchRefreshToken())
         }
       }
     ])
