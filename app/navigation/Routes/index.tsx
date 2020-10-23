@@ -2,11 +2,11 @@ import React, { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native'
 
-import AuthStack from '../AuthStack'
-import HomeStack from '../HomeStack'
-
 import { RootState } from '../../redux/reducer'
 import { FetchRefreshToken } from '../../redux/modules/token/actions'
+
+import AuthStack from '../AuthStack'
+import HomeStack from '../HomeStack'
 
 const propsSelector = (state: RootState) => ({
   loggedIn: state.modules.token.loggedIn
