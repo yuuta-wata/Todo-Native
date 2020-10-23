@@ -1,6 +1,6 @@
 import {
   FETCH_REFRESH_TOKEN,
-  FETCH_REFRESH_TOKEN_RESULTED,
+  GET_ACCESS_TOKEN,
   TokenActionType
 } from './action-type'
 
@@ -8,9 +8,13 @@ export const FetchRefreshToken = (): TokenActionType => ({
   type: FETCH_REFRESH_TOKEN
 })
 
-export const FetchResult = (result: boolean): TokenActionType => ({
-  type: FETCH_REFRESH_TOKEN_RESULTED,
+export const GetAccessToken = (
+  accessToken: string | null,
+  loggedIn: boolean
+): TokenActionType => ({
+  type: GET_ACCESS_TOKEN,
   payload: {
-    result
+    accessToken,
+    loggedIn
   }
 })

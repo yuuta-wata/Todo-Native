@@ -15,8 +15,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
-import Button from '../components/Button'
-
 import { ErrorPropertyType } from '../redux/modules/register/action-type'
 import {
   ChangeNickname,
@@ -29,6 +27,8 @@ import {
   EmailUnique
 } from '../redux/modules/register/actions'
 import { RootState } from '../redux/reducer'
+
+import Button from '../components/Button'
 
 const propsSelector = (state: RootState) => ({
   nickname: state.modules.register.nickName,
@@ -77,12 +77,6 @@ const RegisterScreen: FC = () => {
     dispatch(SendRegisterResult({ success: false, error: undefined }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  console.log('Typeof emailUniqueError:', typeof emailUniqueError)
-  console.log(
-    'Typeof registerResulted:',
-    typeof !registerResulted.error === 'string'
-  )
 
   const error =
     registerResulted.error &&

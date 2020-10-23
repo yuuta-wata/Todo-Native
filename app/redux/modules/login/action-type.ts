@@ -10,9 +10,11 @@ export const LOGIN_LOADING = 'LOGIN_LOADING'
 
 export const LOGIN_SUCCESS_ALERT = 'LOGIN_SUCCESS_ALERT'
 
+type UserData = { accessToken: string } | null
+
 export interface LoginResponse {
   data: {
-    login: null | boolean
+    login: UserData
   }
   errors?: {
     message: {
@@ -22,8 +24,9 @@ export interface LoginResponse {
 }
 
 export interface LoginResulted {
-  success: null | boolean
+  success: string | null
   error?: string
+  cookie?: string
 }
 
 interface LoginInputEmail {

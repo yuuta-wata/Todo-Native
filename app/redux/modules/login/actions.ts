@@ -1,5 +1,6 @@
 import {
   LoginActionTypes,
+  LoginResponse,
   LoginResulted,
   LOGIN_INPUT_EMAIL,
   LOGIN_INPUT_PASSWORD,
@@ -54,3 +55,14 @@ export const LoginSuccessAlert = (
     successAlert
   }
 })
+
+export const LoginVerify = (response: LoginResponse): LoginActionTypes => {
+  // console.log('response:', response)
+  return {
+    type: SEND_LOGIN_RESULTED,
+    payload: {
+      success: response.data.login ? response.data.login.accessToken : null,
+      error: response.errors ? response.errors[0].message.message : undefined
+    }
+  }
+}

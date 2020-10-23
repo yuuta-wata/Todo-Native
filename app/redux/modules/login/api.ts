@@ -10,7 +10,12 @@ export const login = ({ email, password }: LoginData) =>
     'http://localhost:4000/graphql',
     {
       query: `mutation Login($email: String!, $password: String!) {
-        login(loginInput: { email: $email, password: $password })
+        login(loginInput: { email: $email, password: $password }) {
+          id
+          nickname
+          email
+          accessToken
+        }
       }
         `,
       variables: {

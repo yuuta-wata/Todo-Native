@@ -14,17 +14,18 @@ import {
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
-import Button from '../components/Button'
-
 import {
   ChangeLoginEmail,
   ChangeLoginPassword,
   IsLoginLoading,
   SendLoginData,
-  LoginSuccessAlert
+  LoginSuccessAlert,
+  LoginVerify
 } from '../redux/modules/login/actions'
-import { FetchRefreshToken } from '../redux/modules/token/actions'
+import { GetAccessToken } from '../redux/modules/token/actions'
 import { RootState } from '../redux/reducer'
+
+import Button from '../components/Button'
 
 const propsSelector = (state: RootState) => ({
   email: state.modules.login.email,
@@ -55,7 +56,7 @@ const LoginScreen: FC = () => {
 
   useEffect(() => {
     dispatch(IsLoginLoading(false))
-    dispatch(LoginSuccessAlert(loginResulted.success))
+    dispatch(LoginSuccessAlert(!!loginResulted.success))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginResulted])
 
@@ -63,6 +64,7 @@ const LoginScreen: FC = () => {
     dispatch(LoginSuccessAlert(false))
     dispatch(ChangeLoginEmail(''))
     dispatch(ChangeLoginPassword(''))
+    dispatch(LoginVerify({ data: { login: null }, errors: undefined }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -72,7 +74,10 @@ const LoginScreen: FC = () => {
         text: 'OK',
         onPress: () => {
           dispatch(LoginSuccessAlert(false))
-          dispatch(FetchRefreshToken())
+          dispatch(
+            GetAccessToken(loginResulted.success, !!loginResulted.success)
+          )
+          dispatch(LoginVerify({ data: { login: null }, errors: undefined }))
         }
       }
     ])

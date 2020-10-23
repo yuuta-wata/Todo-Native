@@ -1,11 +1,13 @@
-import { TokenActionType, FETCH_REFRESH_TOKEN_RESULTED } from './action-type'
+import { TokenActionType, GET_ACCESS_TOKEN } from './action-type'
 
 interface State {
   loggedIn: boolean
+  accessToken: string | null
 }
 
 const initialState: State = {
-  loggedIn: false
+  loggedIn: false,
+  accessToken: null
 }
 
 export const TokenReducer = (
@@ -13,9 +15,9 @@ export const TokenReducer = (
   action: TokenActionType
 ): State => {
   switch (action.type) {
-    case FETCH_REFRESH_TOKEN_RESULTED:
-      const { result } = action.payload
-      return { ...state, loggedIn: result }
+    case GET_ACCESS_TOKEN:
+      const { accessToken, loggedIn } = action.payload
+      return { ...state, accessToken, loggedIn }
 
     default:
       return state
