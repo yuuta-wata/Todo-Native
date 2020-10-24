@@ -28,7 +28,7 @@ import {
 } from '../redux/modules/register/actions'
 import { RootState } from '../redux/reducer'
 
-import Button from '../components/Button'
+import Button from '../components/common/Button'
 
 const propsSelector = (state: RootState) => ({
   nickname: state.modules.register.nickName,

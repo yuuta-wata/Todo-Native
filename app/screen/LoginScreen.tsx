@@ -25,7 +25,7 @@ import {
 import { GetAccessToken } from '../redux/modules/token/actions'
 import { RootState } from '../redux/reducer'
 
-import Button from '../components/Button'
+import Button from '../components/common/Button'
 
 const propsSelector = (state: RootState) => ({
   email: state.modules.login.email,

@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { SafeAreaView, StyleSheet, Dimensions, View, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import Button from '../components/Button'
+import Button from '../components/common/Button'
 
 const TopScreen: FC = () => {
   const { width, height } = Dimensions.get('window')
