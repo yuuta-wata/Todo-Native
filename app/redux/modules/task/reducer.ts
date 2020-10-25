@@ -2,19 +2,22 @@ import {
   TaskActionType,
   TaskList,
   FETCH_TASK_LIST_RESULTED,
-  TASK_LOADING
+  TASK_LOADING,
+  INPUT_TASK
 } from './action-type'
 
 interface State {
   taskList: TaskList[] | null
   error: string | null
   isLoading: boolean
+  content: string
 }
 
 const initialState: State = {
   taskList: null,
   error: null,
-  isLoading: false
+  isLoading: false,
+  content: ''
 }
 
 export const TaskReducer = (
@@ -29,6 +32,10 @@ export const TaskReducer = (
     case TASK_LOADING:
       const { isLoading } = action.payload
       return { ...state, isLoading }
+
+    case INPUT_TASK:
+      const { task } = action.payload
+      return { ...state, content: task }
 
     default:
       return state

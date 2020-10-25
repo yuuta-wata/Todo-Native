@@ -20,3 +20,22 @@ export const fetchTaskList = (token: string | null) =>
       }
     }
   )
+
+export const taskPostRepuest = (token: string | null, title: string) =>
+  axios.post(
+    API_SERVER_URL,
+    {
+      query: `mutation CreateTodo($title: String!) {
+      createTodo(input: { title: $title })
+    }
+      `,
+      variables: {
+        title
+      }
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  )

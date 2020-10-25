@@ -3,15 +3,17 @@ import { Dimensions } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import HomeScreen from '../../screen/HomeScreen'
+import PostScreen from '../../screen/PostScreen'
 
 import { HomeParamList } from './type'
 
 const Stack = createStackNavigator<HomeParamList>()
 
-const AuthStack: FC = () => {
+const HomeStack: FC = () => {
   const { height } = Dimensions.get('window')
+
   return (
-    <Stack.Navigator initialRouteName="HomeScreen">
+    <Stack.Navigator initialRouteName="HomeScreen" mode="modal">
       <Stack.Screen
         name="HomeScreen"
         options={{
@@ -30,8 +32,9 @@ const AuthStack: FC = () => {
         }}
         component={HomeScreen}
       />
+      <Stack.Screen name="PostScreen" component={PostScreen} />
     </Stack.Navigator>
   )
 }
 
-export default AuthStack
+export default HomeStack

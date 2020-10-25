@@ -53,7 +53,9 @@ const HomeScreen: FC = () => {
           width: addButtonSize * 0.5,
           height: addButtonSize * 0.5
         }}
-        onPress={() => {}}
+        onPress={() => {
+          navigation.navigate('PostScreen')
+        }}
       />
       <SafeAreaView style={styles.safeArea} />
     </>

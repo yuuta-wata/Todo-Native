@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 
 export type HomeParamList = {
   HomeScreen: undefined
+  PostScreen: undefined
 }
 
 export type HomeNavProps<T extends keyof HomeParamList> = {

@@ -4,6 +4,10 @@ export const FETCH_TASK_LIST_RESULTED = 'FETCH_TASK_LIST_RESULTED'
 
 export const TASK_LOADING = 'TASK_LOADING'
 
+export const INPUT_TASK = 'INPUT_TASK'
+
+export const ADD_TASK = 'ADD_TASK'
+
 export interface TaskList {
   id: string
   userId: string
@@ -41,7 +45,20 @@ interface TaskIsLoading {
   }
 }
 
+interface InputTask {
+  type: typeof INPUT_TASK
+  payload: {
+    task: string
+  }
+}
+
+interface AddTask {
+  type: typeof ADD_TASK
+}
+
 export type TaskActionType =
   | FetchTaskList
   | FetchTaskListResulted
   | TaskIsLoading
+  | InputTask
+  | AddTask
