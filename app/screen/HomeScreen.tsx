@@ -1,38 +1,68 @@
-import React, { FC, useEffect } from 'react'
-import { Alert, SafeAreaView, StyleSheet, View, Dimensions } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigation } from '@react-navigation/native'
+import React, { FC, useEffect, useLayoutEffect } from 'react'
+import { SafeAreaView, StyleSheet, View, Dimensions } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
+import {
+  HomeRouteProps,
+  HomeNavigationProps
+} from '../navigation/MainStack/type'
 import { FetchTaskListAction } from '../redux/modules/task/actions'
 import AddButton from '../components/home/AddButton'
 import TaskList from '../components/home/TaskList'
-import { propsSelector } from '../redux/modules/task/selector'
+import HamburgerButton from '../components/home/HamburgerButton'
 
 const HomeScreen: FC = () => {
   const dispatch = useDispatch()
-  const { error } = useSelector(propsSelector)
-  const navigation = useNavigation()
+  const navigation = useNavigation<HomeNavigationProps<'HomeScreen'>>()
+  const route = useRoute<HomeRouteProps<'HomeScreen'>>()
 
   const { height, width } = Dimensions.get('window')
   // AddButtonSize
   const addButtonSize = height * 0.08
+  // HambrugerSize
+  const hambrugerSize = height * 0.04
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: 'ホーム',
+      headerTitleStyle: {
+        color: '#EBEBEB',
+        fontSize: height * 0.03
+      },
+      headerLeft: () => (
+        <HamburgerButton
+          style={{
+            width: hambrugerSize,
+            height: hambrugerSize
+          }}
+          hamburgerStyle={{
+            width: hambrugerSize * 0.8,
+            height: hambrugerSize * 0.1,
+            borderRadius: hambrugerSize * 0.8 * 2
+          }}
+          onPress={() => {
+            route.params && route.params.props.navigation.openDrawer()
+          }}
+        />
+      ),
+      headerLeftContainerStyle: {
+        marginLeft: height * 0.02
+      },
+      headerStyle: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#EBEBEB',
+        backgroundColor: '#2B6187'
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation])
 
   useEffect(() => {
     dispatch(FetchTaskListAction())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // 通常このエラーアラートが発動することは無い
-  if (error) {
-    Alert.alert(error, undefined, [
-      {
-        text: 'OK',
-        onPress: () => {
-          navigation.navigate('TopScreen')
-        }
-      }
-    ])
-  }
   return (
     <>
       <View style={styles.container}>
@@ -77,10 +107,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#EBEBEB',
     backgroundColor: '#88d3db'
-  },
-  addButtonText: {
-    color: '#EBEBEB',
-    fontWeight: '500'
   },
   safeArea: {
     backgroundColor: '#2d6187'

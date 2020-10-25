@@ -6,7 +6,7 @@ import { RootState } from '../../redux/reducer'
 import { FetchRefreshToken } from '../../redux/modules/token/actions'
 
 import AuthStack from '../AuthStack'
-import HomeStack from '../HomeStack'
+import HomeStack from '../MainStack'
 
 const propsSelector = (state: RootState) => ({
   loggedIn: state.modules.token.loggedIn
