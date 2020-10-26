@@ -8,7 +8,7 @@ import {
 
 import { RootState } from '../../reducer'
 
-import { GetAccessToken } from '../token/actions'
+import { SetAccessToken } from '../token/actions'
 
 import { LogoutActionType, LOGOUT } from './action-type'
 import { sendLogoutRequest } from './api'
@@ -22,7 +22,7 @@ export const logoutEpic: Epic = (
     mergeMap(() =>
       sendLogoutRequest(state$.value.modules.token.accessToken).then(res => {
         console.log('res:', res.headers)
-        return GetAccessToken(res.headers.cookie, false)
+        return SetAccessToken(res.headers.cookie, false)
       })
     )
   )

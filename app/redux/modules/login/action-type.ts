@@ -24,9 +24,9 @@ export interface LoginResponse {
 }
 
 export interface LoginResulted {
-  success: string | null
+  success: boolean
   error?: string
-  cookie?: string
+  token: string | null
 }
 
 interface LoginInputEmail {

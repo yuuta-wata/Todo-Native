@@ -22,9 +22,9 @@ const initialState: State = {
   isLoading: false,
   successAlert: null,
   loginResult: {
-    success: null,
+    success: false,
     error: undefined,
-    cookie: undefined
+    token: null
   }
 }
 
@@ -46,8 +46,8 @@ export const LoginReducer = (
       return { ...state, isLoading }
 
     case SEND_LOGIN_RESULTED:
-      const { success, error, cookie } = action.payload
-      return { ...state, loginResult: { success, error, cookie } }
+      const { success, error, token } = action.payload
+      return { ...state, loginResult: { success, error, token } }
 
     case LOGIN_SUCCESS_ALERT:
       const { successAlert } = action.payload

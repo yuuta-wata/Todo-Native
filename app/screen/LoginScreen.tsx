@@ -22,7 +22,7 @@ import {
   LoginSuccessAlert,
   LoginVerify
 } from '../redux/modules/login/actions'
-import { GetAccessToken } from '../redux/modules/token/actions'
+import { SetAccessToken } from '../redux/modules/token/actions'
 import { RootState } from '../redux/reducer'
 
 import Button from '../components/common/Button'
@@ -74,9 +74,7 @@ const LoginScreen: FC = () => {
         text: 'OK',
         onPress: () => {
           dispatch(LoginSuccessAlert(false))
-          dispatch(
-            GetAccessToken(loginResulted.success, !!loginResulted.success)
-          )
+          dispatch(SetAccessToken(loginResulted.token, loginResulted.success))
           dispatch(LoginVerify({ data: { login: null }, errors: undefined }))
         }
       }
@@ -125,7 +123,7 @@ const LoginScreen: FC = () => {
                 placeholderTextColor="rgba(235, 235, 235, 0.5)"
                 autoCapitalize="none"
                 selectionColor={'#9ba4b4'}
-                onChangeText={(text) => dispatch(ChangeLoginEmail(text))}
+                onChangeText={text => dispatch(ChangeLoginEmail(text))}
               />
               <TextInput
                 style={[
@@ -143,7 +141,7 @@ const LoginScreen: FC = () => {
                 autoCapitalize="none"
                 maxLength={16}
                 selectionColor={'#9ba4b4'}
-                onChangeText={(text) => dispatch(ChangeLoginPassword(text))}
+                onChangeText={text => dispatch(ChangeLoginPassword(text))}
               />
               <Button
                 style={[

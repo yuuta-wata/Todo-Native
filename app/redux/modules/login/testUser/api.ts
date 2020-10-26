@@ -9,7 +9,12 @@ interface LoginData {
 export const testLogin = ({ email, password }: LoginData) =>
   axios.post(API_SERVER_URL, {
     query: `mutation TestUserLogin($email: String!, $password: String!) {
-        testUserLogin(loginInput: { email: $email, password: $password })
+        testUserLogin(loginInput: { email: $email, password: $password }) {
+          id
+          nickname
+          email
+          accessToken
+        }
       }
         `,
     variables: {

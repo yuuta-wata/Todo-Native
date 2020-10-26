@@ -18,7 +18,6 @@ import {
   ChangeNickname,
   ChangeEmail,
   ChangePassword,
-  SuccessAlert,
   SendDeleteResult,
   SendDeleteRequest
 } from '../redux/modules/account/delete/actions'
@@ -41,7 +40,6 @@ const AccountDeleteScreen: FC<DrawerContentComponentProps> = ({
   const headingFontSize = height * 0.03
 
   useEffect(() => {
-    dispatch(SuccessAlert(false))
     dispatch(ChangeNickname(''))
     dispatch(ChangeEmail(''))
     dispatch(ChangePassword(''))

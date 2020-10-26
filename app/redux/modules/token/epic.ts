@@ -10,7 +10,7 @@ import { RootState } from '../../reducer'
 
 import { TokenActionType, FETCH_REFRESH_TOKEN } from './action-type'
 import { fetchRefreshToken } from './api'
-import { GetAccessToken } from './actions'
+import { SetAccessToken } from './actions'
 
 export const tokenEpic: Epic = (
   action$: ActionsObservable<TokenActionType>,
@@ -20,7 +20,7 @@ export const tokenEpic: Epic = (
     ofType(FETCH_REFRESH_TOKEN),
     mergeMap(() =>
       fetchRefreshToken(state$.value.modules.token.accessToken)
-        .then((res) => GetAccessToken(res.headers.cookie, true))
-        .catch(() => GetAccessToken(null, false))
+        .then(res => SetAccessToken(res.headers.cookie, true))
+        .catch(() => SetAccessToken(null, false))
     )
   )

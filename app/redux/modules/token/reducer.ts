@@ -1,4 +1,4 @@
-import { TokenActionType, GET_ACCESS_TOKEN } from './action-type'
+import { TokenActionType, SET_ACCESS_TOKEN } from './action-type'
 
 interface State {
   loggedIn: boolean
@@ -15,7 +15,7 @@ export const TokenReducer = (
   action: TokenActionType
 ): State => {
   switch (action.type) {
-    case GET_ACCESS_TOKEN:
+    case SET_ACCESS_TOKEN:
       const { accessToken, loggedIn } = action.payload
       return { ...state, accessToken, loggedIn }
 

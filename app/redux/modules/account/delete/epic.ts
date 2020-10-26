@@ -9,7 +9,7 @@ import {
 import { AccountDeleteActionTypes, SEND_DELETE_REQUEST } from './action-type'
 import { sendDeleteRequest } from './api'
 import { RootState } from '../../../reducer'
-import { GetAccessToken } from '../../token/actions'
+import { SetAccessToken } from '../../token/actions'
 
 export const deleteEpic: Epic = (
   action$: ActionsObservable<AccountDeleteActionTypes>,
@@ -23,6 +23,6 @@ export const deleteEpic: Epic = (
         state$.value.modules.account.delete.email,
         state$.value.modules.account.delete.password,
         state$.value.modules.token.accessToken
-      ).then(res => GetAccessToken(res.headers.cookie, false))
+      ).then(res => SetAccessToken(res.headers.cookie, false))
     )
   )

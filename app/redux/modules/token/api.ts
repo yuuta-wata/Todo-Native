@@ -5,6 +5,6 @@ export const fetchRefreshToken = (token: string | null) =>
   axios.post(REFRESH_TOKEN_URL, undefined, {
     withCredentials: true,
     headers: {
-      cookie: token
+      Authorization: `Bearer ${token}`
     }
   })

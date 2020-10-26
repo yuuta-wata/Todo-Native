@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { API_SERVER_URL } from '@env'
 
 interface LoginData {
   email?: string
@@ -7,7 +8,7 @@ interface LoginData {
 
 export const login = ({ email, password }: LoginData) =>
   axios.post(
-    'http://localhost:4000/graphql',
+    API_SERVER_URL,
     {
       query: `mutation Login($email: String!, $password: String!) {
         login(loginInput: { email: $email, password: $password }) {

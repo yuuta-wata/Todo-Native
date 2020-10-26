@@ -12,7 +12,7 @@ import { RootState } from '../../../reducer'
 import { TestLoginActionTypes, TEST_LOGIN_REQUIEST } from './action-type'
 import {} from '../../task/actions'
 import { testLogin } from './api'
-import { GetAccessToken } from '../../token/actions'
+import { SetAccessToken } from '../../token/actions'
 
 export const testLoginEpic: Epic = (
   action$: ActionsObservable<TestLoginActionTypes>,
@@ -26,6 +26,10 @@ export const testLoginEpic: Epic = (
           email: state$.value.modules.testLogin.email,
           password: state$.value.modules.testLogin.password
         })
-      ).pipe(map(res => GetAccessToken(res.headers.cookie, true)))
+      ).pipe(
+        map(res =>
+          SetAccessToken(res.data.data.testUserLogin.accessToken, true)
+        )
+      )
     )
   )

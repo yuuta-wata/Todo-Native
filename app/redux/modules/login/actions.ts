@@ -58,11 +58,13 @@ export const LoginSuccessAlert = (
 
 export const LoginVerify = (response: LoginResponse): LoginActionTypes => {
   // console.log('response:', response)
+  const { data, errors } = response
   return {
     type: SEND_LOGIN_RESULTED,
     payload: {
-      success: response.data.login ? response.data.login.accessToken : null,
-      error: response.errors ? response.errors[0].message.message : undefined
+      success: !!data.login,
+      error: errors ? errors[0].message.message : undefined,
+      token: data.login ? data.login.accessToken : null
     }
   }
 }
