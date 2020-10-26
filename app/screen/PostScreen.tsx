@@ -14,6 +14,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
+import { HomeNavigationProps } from '../navigation/MainStack/type'
 import { AddTask, ChangeTask } from '../redux/modules/task/actions'
 import { propsSelector } from '../redux/modules/task/selector'
 import Button from '../components/common/Button'
@@ -21,7 +22,7 @@ import Button from '../components/common/Button'
 const PostScreen: FC = () => {
   const dispatch = useDispatch()
   const { task } = useSelector(propsSelector)
-  const navigation = useNavigation()
+  const navigation = useNavigation<HomeNavigationProps<'PostScreen'>>()
 
   const { height, width } = Dimensions.get('window')
   // inputSize
