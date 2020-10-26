@@ -4,6 +4,7 @@ import { registerEpic } from './register/epic'
 import { loginEpic } from './login/epic'
 import { tokenEpic } from './token/epic'
 import { taskEpic } from './task/epic'
+import { logoutEpic } from './logout/epic'
 import { accountEpic } from './account/epic'
 
 export const rootEpic = combineEpics(
@@ -11,5 +12,6 @@ export const rootEpic = combineEpics(
   loginEpic,
   tokenEpic,
   taskEpic,
-  accountEpic
+  accountEpic,
+  logoutEpic
 )

@@ -15,6 +15,7 @@ const propsSelector = (state: RootState) => ({
 const Routes: FC = () => {
   const dispatch = useDispatch()
   const { loggedIn } = useSelector(propsSelector)
+  console.log('loggedIn:', loggedIn)
 
   useEffect(() => {
     dispatch(FetchRefreshToken())

@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { Dimensions, SafeAreaView, Text } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { createStackNavigator } from '@react-navigation/stack'
 import {
   createDrawerNavigator,
@@ -7,13 +8,14 @@ import {
   DrawerContentScrollView
 } from '@react-navigation/drawer'
 
+import { LogoutRequest } from '../../redux/modules/logout/actions'
+import Button from '../../components/common/Button'
 import Header from '../../components/common/Header'
 import HomeScreen from '../../screen/HomeScreen'
 import PostScreen from '../../screen/PostScreen'
 import AccountDeleteScreen from '../../screen/AccountDeleteScreen'
 
 import { DrawerParamList, HomeParamList } from './type'
-import Button from '../../components/common/Button'
 
 const Home = createStackNavigator<HomeParamList>()
 const Drawer = createDrawerNavigator<DrawerParamList>()
@@ -66,6 +68,7 @@ const HomeStack = ({ navigation }: DrawerContentComponentProps) => {
 const CustomDrawerContent: FC<DrawerContentComponentProps> = ({
   navigation
 }) => {
+  const dispatch = useDispatch()
   const { height } = Dimensions.get('window')
   // ButtonSize
   const buttonHeight = height * 0.05
@@ -115,7 +118,7 @@ const CustomDrawerContent: FC<DrawerContentComponentProps> = ({
           fontSize: buttonHeight * 0.5,
           fontWeight: '600'
         }}
-        onPress={() => console.log('ログアウト')}
+        onPress={() => dispatch(LogoutRequest())}
       />
     </DrawerContentScrollView>
   )
