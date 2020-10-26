@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react'
-import { FlatList, Dimensions, RefreshControl } from 'react-native'
+import { FlatList, Dimensions, RefreshControl, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { propsSelector } from '../../../redux/modules/task/selector'
@@ -36,6 +36,9 @@ const TaskList: FC<Props> = ({ style }) => {
           textStyle={{ fontSize: height * 0.02 }}
           title={item.title}
         />
+      )}
+      ListFooterComponent={() => (
+        <View style={{ width, height: height * 0.15 }} />
       )}
       keyExtractor={item => item.id}
       refreshControl={
