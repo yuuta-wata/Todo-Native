@@ -24,7 +24,10 @@ const TaskList: FC<Props> = ({ style }) => {
   return (
     <FlatList
       style={style}
-      data={taskList}
+      data={
+        taskList &&
+        taskList.sort((taskA, taskB) => (taskA.id < taskB.id ? 1 : -1))
+      }
       renderItem={({ item }) => (
         <TaskItem
           style={{
