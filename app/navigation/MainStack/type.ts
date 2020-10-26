@@ -1,13 +1,13 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { DrawerContentComponentProps } from '@react-navigation/drawer'
 
 export type DrawerParamList = {
   Home: undefined
+  AccountDeleteScreen: undefined
 }
 
 export type HomeParamList = {
-  HomeScreen: { props: DrawerContentComponentProps } | undefined
+  HomeScreen: undefined
   PostScreen: undefined
 }
 
