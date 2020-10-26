@@ -2,6 +2,7 @@ import { combineEpics } from 'redux-observable'
 
 import { registerEpic } from './register/epic'
 import { loginEpic } from './login/epic'
+import { testLoginEpic } from './login/testUser/epic'
 import { tokenEpic } from './token/epic'
 import { taskEpic } from './task/epic'
 import { logoutEpic } from './logout/epic'
@@ -13,5 +14,6 @@ export const rootEpic = combineEpics(
   tokenEpic,
   taskEpic,
   accountEpic,
-  logoutEpic
+  logoutEpic,
+  testLoginEpic
 )
