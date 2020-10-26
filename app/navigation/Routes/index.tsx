@@ -20,6 +20,7 @@ const Routes: FC = () => {
     dispatch(FetchRefreshToken())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  console.log(loggedIn)
 
   return (
     <NavigationContainer>

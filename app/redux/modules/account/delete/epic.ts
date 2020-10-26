@@ -1,5 +1,4 @@
-import { from } from 'rxjs'
-import { map, mergeMap } from 'rxjs/operators'
+import { mergeMap } from 'rxjs/operators'
 import {
   Epic,
   ofType,
@@ -10,7 +9,7 @@ import {
 import { AccountDeleteActionTypes, SEND_DELETE_REQUEST } from './action-type'
 import { sendDeleteRequest } from './api'
 import { RootState } from '../../../reducer'
-import { SendDeleteResult } from './actions'
+import { GetAccessToken } from '../../token/actions'
 
 export const deleteEpic: Epic = (
   action$: ActionsObservable<AccountDeleteActionTypes>,
@@ -19,13 +18,11 @@ export const deleteEpic: Epic = (
   action$.pipe(
     ofType(SEND_DELETE_REQUEST),
     mergeMap(() =>
-      from(
-        sendDeleteRequest(
-          state$.value.modules.account.delete.nickName,
-          state$.value.modules.account.delete.email,
-          state$.value.modules.account.delete.password,
-          state$.value.modules.token.accessToken
-        )
-      ).pipe(map(res => SendDeleteResult(res.data, res.headers.cookie)))
+      sendDeleteRequest(
+        state$.value.modules.account.delete.nickName,
+        state$.value.modules.account.delete.email,
+        state$.value.modules.account.delete.password,
+        state$.value.modules.token.accessToken
+      ).then(res => GetAccessToken(res.headers.cookie, false))
     )
   )

@@ -66,18 +66,10 @@ interface AccountDeleteLoading {
   }
 }
 
-interface SuccessAlert {
-  type: typeof SUCCESS_ALERT
-  payload: {
-    successAlert: boolean | null
-  }
-}
-
 export type AccountDeleteActionTypes =
   | InputNickname
   | InputEmail
   | InputPassword
-  | SuccessAlert
   | SendAccountDeleteRequiest
   | SendAccountDeleteResulted
   | AccountDeleteLoading

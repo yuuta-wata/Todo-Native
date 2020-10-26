@@ -1,6 +1,5 @@
 import {
   AccountDeleteActionTypes,
-  SUCCESS_ALERT,
   INPUT_NICKNAME,
   INPUT_EMAIL,
   INPUT_PASSWORD,
@@ -57,14 +56,5 @@ export const IsAccountDeleteLoading = (
   type: DELETE_LOADING,
   payload: {
     isLoading
-  }
-})
-
-export const SuccessAlert = (
-  successAlert: boolean | null
-): AccountDeleteActionTypes => ({
-  type: SUCCESS_ALERT,
-  payload: {
-    successAlert
   }
 })
