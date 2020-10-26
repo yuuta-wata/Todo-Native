@@ -1,23 +1,13 @@
 import React, { FC } from 'react'
-import {
-  SafeAreaView,
-  StyleSheet,
-  Dimensions,
-  View,
-  Text,
-  Alert
-} from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { SafeAreaView, StyleSheet, Dimensions, View, Text } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
 import { TestLoginRequest } from '../redux/modules/login/testUser/actions'
-import { propsSelector } from '../redux/modules/login/testUser/selector'
-import { GetAccessToken } from '../redux/modules/token/actions'
 import Button from '../components/common/Button'
 
 const TopScreen: FC = () => {
   const dispatch = useDispatch()
-  const { testLoginResulted } = useSelector(propsSelector)
   const { width, height } = Dimensions.get('window')
   const navigation = useNavigation()
 
@@ -27,24 +17,6 @@ const TopScreen: FC = () => {
   const buttonTitleSize = height * 0.025
   // headingSize
   const headingFontSize = height * 0.07
-
-  if (testLoginResulted && testLoginResulted.success) {
-    Alert.alert('ログインしました！', undefined, [
-      {
-        text: 'OK',
-        onPress: () => {
-          // dispatch(LoginSuccessAlert(false))
-          dispatch(
-            GetAccessToken(
-              testLoginResulted.success,
-              !!testLoginResulted.success
-            )
-          )
-          // dispatch(LoginVerify({ data: { login: null }, errors: undefined }))
-        }
-      }
-    ])
-  }
 
   return (
     <SafeAreaView style={styles.container}>
