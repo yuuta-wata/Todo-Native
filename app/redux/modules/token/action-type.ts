@@ -12,7 +12,6 @@ interface SetAccessToken {
   type: typeof SET_ACCESS_TOKEN
   payload: {
     accessToken: string | null
-    loggedIn: boolean
   }
 }
 

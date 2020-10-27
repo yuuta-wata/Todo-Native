@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { API_SERVER_URL } from '@env'
 
 interface RegisterData {
   nickname: string
@@ -8,7 +9,7 @@ interface RegisterData {
 
 export const register = ({ nickname, email, password }: RegisterData) =>
   axios.post(
-    'http://localhost:4000/graphql',
+    API_SERVER_URL,
     {
       query: `mutation Register($nickname: String!, $email: String!, $password: String!) {
           register(

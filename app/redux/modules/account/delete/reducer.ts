@@ -13,6 +13,7 @@ interface State {
   password: string
   isLoading: boolean
   successAlert: boolean | null
+  token: string | null
   accountDeleteResult: AccountDeleteResulted
 }
 
@@ -22,6 +23,7 @@ const initialState: State = {
   password: '',
   isLoading: false,
   successAlert: false,
+  token: null,
   accountDeleteResult: {
     success: null,
     error: undefined

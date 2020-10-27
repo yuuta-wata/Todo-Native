@@ -27,9 +27,7 @@ export const testLoginEpic: Epic = (
           password: state$.value.modules.testLogin.password
         })
       ).pipe(
-        map(res =>
-          SetAccessToken(res.data.data.testUserLogin.accessToken, true)
-        )
+        map(res => SetAccessToken(res.data.data.testUserLogin.accessToken))
       )
     )
   )

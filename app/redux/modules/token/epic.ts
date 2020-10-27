@@ -20,7 +20,7 @@ export const tokenEpic: Epic = (
     ofType(FETCH_REFRESH_TOKEN),
     mergeMap(() =>
       fetchRefreshToken(state$.value.modules.token.accessToken)
-        .then(res => SetAccessToken(res.headers.cookie, true))
-        .catch(() => SetAccessToken(null, false))
+        .then(res => SetAccessToken(res.headers.cookie))
+        .catch(() => SetAccessToken(null))
     )
   )

@@ -34,12 +34,11 @@ export const SendDeleteRequest = (): AccountDeleteActionTypes => ({
   type: SEND_DELETE_REQUEST
 })
 
-export const SendDeleteResult = (
+export const deleteResult = (
   result: AccountDeleteResponse,
   token?: string | null
 ): AccountDeleteActionTypes => {
   const { data, errors } = result
-  console.log('token:', token)
   return {
     type: SEND_DELETE_RESULTED,
     payload: {

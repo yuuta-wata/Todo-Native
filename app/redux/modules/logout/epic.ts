@@ -20,9 +20,8 @@ export const logoutEpic: Epic = (
   action$.pipe(
     ofType(LOGOUT),
     mergeMap(() =>
-      sendLogoutRequest(state$.value.modules.token.accessToken).then(res => {
-        console.log('res:', res.headers)
-        return SetAccessToken(res.headers.cookie, false)
-      })
+      sendLogoutRequest(state$.value.modules.token.accessToken).then(res =>
+        SetAccessToken(res.headers.cookie)
+      )
     )
   )

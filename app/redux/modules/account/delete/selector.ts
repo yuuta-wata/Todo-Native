@@ -9,6 +9,7 @@ export const propsSelector = (state: RootState) => {
           email,
           password,
           isLoading,
+          token,
           accountDeleteResult: { success, error }
         }
       }
@@ -20,6 +21,7 @@ export const propsSelector = (state: RootState) => {
     password,
     isLoading,
     success,
-    error
+    error,
+    token
   }
 }

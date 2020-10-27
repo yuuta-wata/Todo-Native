@@ -9,24 +9,21 @@ import AuthStack from '../AuthStack'
 import HomeStack from '../MainStack'
 
 const propsSelector = (state: RootState) => ({
-  loggedIn: state.modules.token.loggedIn,
   accessToken: state.modules.token.accessToken
 })
 
 const Routes: FC = () => {
   const dispatch = useDispatch()
-  const { loggedIn, accessToken } = useSelector(propsSelector)
+  const { accessToken } = useSelector(propsSelector)
 
   useEffect(() => {
     dispatch(FetchRefreshToken())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  console.log('accessToken:', accessToken)
-  console.log('loggedIn:', loggedIn)
 
   return (
     <NavigationContainer>
-      {loggedIn ? <HomeStack /> : <AuthStack />}
+      {accessToken ? <HomeStack /> : <AuthStack />}
     </NavigationContainer>
   )
 }

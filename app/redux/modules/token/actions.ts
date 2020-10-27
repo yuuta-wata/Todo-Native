@@ -9,12 +9,10 @@ export const FetchRefreshToken = (): TokenActionType => ({
 })
 
 export const SetAccessToken = (
-  accessToken: string | null,
-  loggedIn: boolean
+  accessToken: string | null
 ): TokenActionType => ({
   type: SET_ACCESS_TOKEN,
   payload: {
-    accessToken,
-    loggedIn
+    accessToken
   }
 })

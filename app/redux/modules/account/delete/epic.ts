@@ -6,10 +6,11 @@ import {
   ActionsObservable
 } from 'redux-observable'
 
+import { RootState } from '../../../reducer'
+
 import { AccountDeleteActionTypes, SEND_DELETE_REQUEST } from './action-type'
 import { sendDeleteRequest } from './api'
-import { RootState } from '../../../reducer'
-import { SetAccessToken } from '../../token/actions'
+import { deleteResult } from './actions'
 
 export const deleteEpic: Epic = (
   action$: ActionsObservable<AccountDeleteActionTypes>,
@@ -23,6 +24,6 @@ export const deleteEpic: Epic = (
         state$.value.modules.account.delete.email,
         state$.value.modules.account.delete.password,
         state$.value.modules.token.accessToken
-      ).then(res => SetAccessToken(res.headers.cookie, false))
+      ).then(res => deleteResult(res.data, res.headers.cookie))
     )
   )

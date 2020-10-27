@@ -74,7 +74,7 @@ const LoginScreen: FC = () => {
         text: 'OK',
         onPress: () => {
           dispatch(LoginSuccessAlert(false))
-          dispatch(SetAccessToken(loginResulted.token, loginResulted.success))
+          dispatch(SetAccessToken(loginResulted.token))
           dispatch(LoginVerify({ data: { login: null }, errors: undefined }))
         }
       }
