@@ -9,7 +9,8 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
-  Platform
+  Platform,
+  Alert
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
@@ -18,19 +19,20 @@ import {
   ChangeNickname,
   ChangeEmail,
   ChangePassword,
-  SendDeleteResult,
+  deleteResult,
   SendDeleteRequest
 } from '../redux/modules/account/delete/actions'
 import { propsSelector } from '../redux/modules/account/delete/selector'
 
 import Button from '../components/common/Button'
 import Header from '../components/common/Header'
+import { SetAccessToken } from '../redux/modules/token/actions'
 
 const AccountDeleteScreen: FC<DrawerContentComponentProps> = ({
   navigation
 }) => {
   const dispatch = useDispatch()
-  const { isLoading, error } = useSelector(propsSelector)
+  const { isLoading, error, token, success } = useSelector(propsSelector)
   const { width, height } = Dimensions.get('window')
   // inputSize
   const inputWidth = width * 0.8
@@ -44,10 +46,25 @@ const AccountDeleteScreen: FC<DrawerContentComponentProps> = ({
     dispatch(ChangeEmail(''))
     dispatch(ChangePassword(''))
     dispatch(
-      SendDeleteResult({ data: { deleteAccount: false }, errors: undefined })
+      deleteResult({ data: { deleteAccount: false }, errors: undefined })
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  console.log('success:', success)
+  if (success) {
+    Alert.alert('アカウントを削除しました。', undefined, [
+      {
+        text: 'OK',
+        onPress: () => {
+          dispatch(SetAccessToken(token))
+          dispatch(
+            deleteResult({ data: { deleteAccount: false }, errors: undefined })
+          )
+        }
+      }
+    ])
+  }
 
   return (
     <SafeAreaView style={styles.container}>
