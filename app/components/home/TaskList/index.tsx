@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react'
-import { FlatList, Dimensions, RefreshControl, View } from 'react-native'
+import { FlatList, Dimensions, RefreshControl, View, Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { propsSelector } from '../../../redux/modules/task/selector'
@@ -15,6 +15,8 @@ const TaskList: FC<Props> = ({ style }) => {
   const dispatch = useDispatch()
   const { taskList, isLoading } = useSelector(propsSelector)
   const { width, height } = Dimensions.get('window')
+  // TaskItemSize
+  const taskItemHeight = height * 0.15
 
   const onRefresh = useCallback(() => {
     dispatch(TaskLoading())
@@ -32,7 +34,7 @@ const TaskList: FC<Props> = ({ style }) => {
         <TaskItem
           style={{
             width: width,
-            height: height * 0.15,
+            height: taskItemHeight,
             paddingHorizontal: width * 0.05,
             paddingVertical: height * 0.05
           }}
@@ -40,8 +42,27 @@ const TaskList: FC<Props> = ({ style }) => {
           title={item.title}
         />
       )}
+      ListEmptyComponent={() => (
+        <View
+          style={{
+            width,
+            height: taskItemHeight,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#2d6187'
+          }}>
+          <Text
+            style={{
+              color: '#88d3db',
+              fontSize: height * 0.02,
+              fontWeight: '600'
+            }}>
+            やることを追加しよう！！
+          </Text>
+        </View>
+      )}
       ListFooterComponent={() => (
-        <View style={{ width, height: height * 0.15 }} />
+        <View style={{ width, height: taskItemHeight }} />
       )}
       keyExtractor={item => item.id}
       refreshControl={
