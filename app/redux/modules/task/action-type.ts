@@ -8,6 +8,12 @@ export const INPUT_TASK = 'INPUT_TASK'
 
 export const ADD_TASK = 'ADD_TASK'
 
+export const TASK_DELETE = 'TASK_DELETE'
+
+export const TASK_DELETE_RESULTED = 'TASK_DELETE_RESULTED'
+
+export const TASK_DELETE_LOADING = 'TASK_DELETE_LOADING'
+
 export interface TaskList {
   id: string
   userId: string
@@ -23,6 +29,23 @@ export interface FetchResponse {
       message: string
     }
   }[]
+}
+
+export interface TaskDeleteResponse {
+  data: {
+    deleteTodo: boolean | null
+  }
+  errors?: {
+    message: {
+      message: string
+    }
+  }[]
+}
+
+export interface TaskDeleteResult {
+  success: boolean
+  deleteError?: string
+  deleteLoading: boolean
 }
 
 interface FetchTaskList {
@@ -56,9 +79,31 @@ interface AddTask {
   type: typeof ADD_TASK
 }
 
+interface TaskDelete {
+  type: typeof TASK_DELETE
+  payload: {
+    taskId: number
+  }
+}
+
+interface TaskDeleteResulted {
+  type: typeof TASK_DELETE_RESULTED
+  payload: TaskDeleteResult
+}
+
+interface TaskDeleteLoading {
+  type: typeof TASK_DELETE_LOADING
+  payload: {
+    deleteLoading: boolean
+  }
+}
+
 export type TaskActionType =
   | FetchTaskList
   | FetchTaskListResulted
   | TaskIsLoading
   | InputTask
   | AddTask
+  | TaskDelete
+  | TaskDeleteResulted
+  | TaskDeleteLoading

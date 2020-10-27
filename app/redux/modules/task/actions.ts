@@ -1,11 +1,15 @@
 import {
   FETCH_TASK_LIST,
   FETCH_TASK_LIST_RESULTED,
+  TASK_DELETE,
+  TASK_DELETE_RESULTED,
   TASK_LOADING,
   INPUT_TASK,
+  ADD_TASK,
+  TaskDeleteResponse,
   FetchResponse,
   TaskActionType,
-  ADD_TASK
+  TASK_DELETE_LOADING
 } from './action-type'
 
 export const FetchTaskListAction = (): TaskActionType => ({
@@ -15,7 +19,7 @@ export const FetchTaskListAction = (): TaskActionType => ({
 export const FetchTaskResultAction = (
   response: FetchResponse
 ): TaskActionType => {
-  console.log('response:', response)
+  // console.log('response:', response)
   return {
     type: FETCH_TASK_LIST_RESULTED,
     payload: {
@@ -42,4 +46,34 @@ export const ChangeTask = (task: string): TaskActionType => ({
 
 export const AddTask = (): TaskActionType => ({
   type: ADD_TASK
+})
+
+export const TaskDeleteRequest = (taskId: number): TaskActionType => ({
+  type: TASK_DELETE,
+  payload: {
+    taskId
+  }
+})
+
+export const TaskDeleteResult = (
+  response: TaskDeleteResponse
+): TaskActionType => {
+  console.log('TaskDeleteResponse:', response.data)
+  return {
+    type: TASK_DELETE_RESULTED,
+    payload: {
+      success: !!response.data.deleteTodo,
+      deleteError: response.errors
+        ? response.errors[0].message.message
+        : undefined,
+      deleteLoading: false
+    }
+  }
+}
+
+export const TaskDeleteLoading = (): TaskActionType => ({
+  type: TASK_DELETE_LOADING,
+  payload: {
+    deleteLoading: true
+  }
 })

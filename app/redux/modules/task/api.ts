@@ -39,3 +39,14 @@ export const taskPostRepuest = (token: string | null, title: string) =>
       }
     }
   )
+
+export const taskDeleteRepuest = (taskId: number | null) =>
+  axios.post(API_SERVER_URL, {
+    query: `mutation DeleteTodo($id: ID!) {
+        deleteTodo(id: $id)
+      }
+      `,
+    variables: {
+      id: taskId
+    }
+  })

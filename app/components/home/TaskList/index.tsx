@@ -5,7 +5,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { propsSelector } from '../../../redux/modules/task/selector'
 import {
   TaskLoading,
-  FetchTaskListAction
+  FetchTaskListAction,
+  TaskDeleteLoading,
+  TaskDeleteRequest
 } from '../../../redux/modules/task/actions'
 
 import TaskItem from './TaskItem'
@@ -13,7 +15,7 @@ import { Props } from './type'
 
 const TaskList: FC<Props> = ({ style }) => {
   const dispatch = useDispatch()
-  const { taskList, isLoading } = useSelector(propsSelector)
+  const { taskList, isLoading, isDeleteLoading } = useSelector(propsSelector)
   const { width, height } = Dimensions.get('window')
   // TaskItemSize
   const taskItemHeight = height * 0.15
@@ -23,6 +25,7 @@ const TaskList: FC<Props> = ({ style }) => {
     dispatch(FetchTaskListAction())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
     <FlatList
       style={style}
@@ -35,11 +38,16 @@ const TaskList: FC<Props> = ({ style }) => {
           style={{
             width: width,
             height: taskItemHeight,
-            paddingHorizontal: width * 0.05,
-            paddingVertical: height * 0.05
+            paddingHorizontal: width * 0.05
           }}
           textStyle={{ fontSize: height * 0.02 }}
+          buttonStyle={{ width: width * 0.1, height: taskItemHeight * 0.2 }}
           title={item.title}
+          disabled={isDeleteLoading}
+          onPress={() => {
+            dispatch(TaskDeleteLoading())
+            dispatch(TaskDeleteRequest(Number(item.id)))
+          }}
         />
       )}
       ListEmptyComponent={() => (

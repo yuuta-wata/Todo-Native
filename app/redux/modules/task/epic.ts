@@ -8,9 +8,18 @@ import {
 
 import { RootState } from '../../reducer'
 
-import { ADD_TASK, FETCH_TASK_LIST, TaskActionType } from './action-type'
-import { fetchTaskList, taskPostRepuest } from './api'
-import { FetchTaskListAction, FetchTaskResultAction } from './actions'
+import {
+  ADD_TASK,
+  FETCH_TASK_LIST,
+  TaskActionType,
+  TASK_DELETE
+} from './action-type'
+import { fetchTaskList, taskPostRepuest, taskDeleteRepuest } from './api'
+import {
+  FetchTaskListAction,
+  FetchTaskResultAction,
+  TaskDeleteResult
+} from './actions'
 
 export const taskEpic = combineEpics(
   (
@@ -21,10 +30,7 @@ export const taskEpic = combineEpics(
       ofType(FETCH_TASK_LIST),
       mergeMap(() =>
         fetchTaskList(state$.value.modules.token.accessToken)
-          .then(res => {
-            // console.log('response:', res.data)
-            return FetchTaskResultAction(res.data)
-          })
+          .then(res => FetchTaskResultAction(res.data))
           .catch(err => console.log(err))
       )
     ),
@@ -39,9 +45,18 @@ export const taskEpic = combineEpics(
           state$.value.modules.token.accessToken,
           state$.value.modules.task.content
         )
-          .then(() => {
-            return FetchTaskListAction()
-          })
+          .then(() => FetchTaskListAction())
+          .catch(err => console.log(err))
+      )
+    ),
+  (action$: ActionsObservable<TaskActionType>) =>
+    action$.pipe(
+      ofType(TASK_DELETE),
+      mergeMap(action =>
+        taskDeleteRepuest(
+          action.type === TASK_DELETE ? action.payload.taskId : null
+        )
+          .then(res => TaskDeleteResult(res.data))
           .catch(err => console.log(err))
       )
     )
